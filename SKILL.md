@@ -24,9 +24,9 @@ grounded in facts rather than guesses.
 Reach for `tangleguard-cli` whenever a task depends on the _structure_ of the
 codebase, in particular:
 
-- **Before introducing a new dependency** between modules or packages — check
-  whether it is allowed (`check-dependency`) and whether it would create a cycle
-  (`would-create-cycle`), _before_ writing the import.
+- **Before introducing a new dependency** between modules or packages — run
+  `check-import` to learn whether it is allowed by the rules AND cycle-free,
+  _before_ writing the import.
 - **When deciding where new code belongs** — ask `placement` for a node's layer
   and the full set of things it may depend on (and that may depend on it).
 - **Before a structural change or refactor** — moving code between layers,
@@ -63,8 +63,23 @@ dependency graph. Run this first to understand the system.
 ### Check Before You Change It (Preflight)
 
 These answer "may I?" _before_ you write the code, so you never introduce a
-violation or a cycle in the first place. A `<node>` is a workspace path like
-`apps::web` or a layer name like `Apps`.
+violation or a cycle in the first place.
+
+The default preflight is **`check-import`** — one combined verdict covering
+both the dependency rules and circular dependencies:
+
+```bash
+tangleguard-cli -q -l <language> [-p <path>] check-import --from <source> --to <target>
+```
+
+The first line is `ALLOWED` or `DENIED`; a denial names the violated rule
+and/or the exact cycle the edge would close. `--from`/`--to` accept file paths
+relative to the workspace root (the files you are editing) or `pkg::module`
+names. If it returns DENIED, do not add the edge — choose a design the
+architecture allows.
+
+Single-signal variants when you only need one answer. A `<node>` is a
+workspace path like `apps::web` or a layer name like `Apps`:
 
 ```bash
 # Where does a node belong, and what may it wire to? (config-only, no -l)
@@ -86,8 +101,8 @@ tangleguard-cli -l <language> [-p <path>] would-create-cycle --from <node> --to 
 - **`would-create-cycle`** reports whether the edge closes a loop and prints the
   existing path it would close.
 
-Add `--ci` to `check-dependency` / `would-create-cycle` to exit non-zero on a
-denied edge or a would-be cycle (useful as a commit/CI guardrail).
+Add `--ci` to `check-import` / `check-dependency` / `would-create-cycle` to
+exit non-zero on a denial (useful as a commit/CI guardrail).
 
 ### Validate the Architecture
 
@@ -107,10 +122,10 @@ Supported languages include `rust`, `go`, `typescript` / `javascript`,
 
 1. The task touches the architecture → run `architecture` to learn the layers,
    the rules, and the package graph.
-2. Before adding a dependency, ask the preflight checks: `placement` to see
-   where code belongs and what it may use, `check-dependency` to confirm a
-   specific edge is allowed, and `would-create-cycle` to be sure it won't close
-   a loop. Decide against the real structure, not a guess.
-3. Make the change.
-4. Run `validate` to confirm you introduced no rule violations or cycles, and
+2. Deciding where new code belongs → ask `placement`. Decide against the real
+   structure, not a guess.
+3. About to add or change an import → run `check-import` with the two files;
+   on DENIED pick a different design instead of adding the edge.
+4. Make the change.
+5. Run `validate` to confirm you introduced no rule violations or cycles, and
    fix anything it reports at the given `file:line`.
