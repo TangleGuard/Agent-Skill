@@ -4,10 +4,11 @@ description: >-
   Inspect a codebase's architecture — layers, packages, the package dependency
   graph, rule violations, and circular dependencies — and run preflight checks
   before changing it: whether a dependency is allowed, whether it would create a
-  cycle, and where a piece of code belongs. Query the TangleGuard CLI instead of
-  reading files or guessing. Use BEFORE adding a dependency between modules,
-  moving code between layers, or any structural / architectural decision, and
-  whenever you need to understand how an unfamiliar codebase is organized.
+  cycle, where a piece of code belongs, and why a dependency exists (the exact
+  imports behind it). Query the TangleGuard CLI instead of reading files or
+  guessing. Use BEFORE adding a dependency between modules, moving code between
+  layers, or any structural / architectural decision, and whenever you need to
+  understand how an unfamiliar codebase is organized.
 ---
 
 # TangleGuard: Query the Architecture, Don't Guess It
@@ -33,6 +34,9 @@ codebase, in particular:
   splitting or merging packages, renaming modules.
 - **When making an architectural or design decision** — consult the real
   layers, the allowed dependency rules, and the package graph first.
+- **When breaking an unwanted dependency or untangling a cycle** — run
+  `explain-dependency` to see the exact imports behind it instead of reading
+  files to find them.
 - **When orienting in an unfamiliar codebase** — get the big picture in a
   single call instead of reading dozens of files.
 - **After a change, to confirm you did not break the architecture** — run the
@@ -59,6 +63,21 @@ tangleguard-cli -l <language> [-p <path>] architecture
 Prints a compact summary: the layers, the allowed dependency rules, the
 packages (with their resolved layer and lines of code), and the package-level
 dependency graph. Run this first to understand the system.
+
+### Explain a dependency (evidence behind an arrow)
+
+```bash
+tangleguard-cli -q -l <language> [-p <path>] explain-dependency --from <source> --to <target>
+```
+
+The architecture summary and cycle reports show *that* a dependency exists;
+`explain-dependency` shows *why*: every reference behind it — imported items,
+source `file:line`, and the exact import statement. Use it when deciding how
+to cut an unwanted dependency or untangle a cycle: the statements reveal
+whether a dependency is a single type-only import (cheap to move) or a broad
+runtime one. `--from`/`--to` accept `pkg::module` prefixes (the package
+segment may be omitted) or file paths; `--to` also accepts an external package
+name to list every usage of a third-party dependency.
 
 ### Check Before You Change It (Preflight)
 
