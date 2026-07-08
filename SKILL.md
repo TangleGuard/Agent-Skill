@@ -70,8 +70,8 @@ dependency graph. Run this first to understand the system.
 tangleguard-cli -q -l <language> [-p <path>] explain-dependency --from <source> --to <target>
 ```
 
-The architecture summary and cycle reports show *that* a dependency exists;
-`explain-dependency` shows *why*: every reference behind it — imported items,
+The architecture summary and cycle reports show _that_ a dependency exists;
+`explain-dependency` shows _why_: every reference behind it — imported items,
 source `file:line`, and the exact import statement. Use it when deciding how
 to cut an unwanted dependency or untangle a cycle: the statements reveal
 whether a dependency is a single type-only import (cheap to move) or a broad
@@ -132,7 +132,12 @@ tangleguard-cli -l <language> [-p <path>] check-circles    # circular dependenci
 ```
 
 Violations come back with `file:line` evidence, so you can jump straight to the
-offending code.
+offending code. Tangles (3+ mutually dependent modules) additionally report a
+ranked cut list — the fewest edges to remove to dissolve the tangle, each with
+its reference count. Pass `--explain-cuts` to `check-circles` to inline the
+exact import statements behind each cut (`file:line` + statement) — one command
+yields the full refactoring plan, no follow-up `explain-dependency` calls
+needed.
 
 Supported languages include `rust`, `go`, `typescript` / `javascript`,
 `python`, `kotlin`, and `php`.
