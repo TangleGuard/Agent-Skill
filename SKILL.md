@@ -132,12 +132,11 @@ tangleguard-cli -l <language> [-p <path>] check-circles    # circular dependenci
 ```
 
 Violations come back with `file:line` evidence, so you can jump straight to the
-offending code. Tangles (3+ mutually dependent modules) additionally report a
-ranked cut list — the fewest edges to remove to dissolve the tangle, each with
-its reference count. Pass `--explain-cuts` to `check-circles` to inline the
-exact import statements behind each cut (`file:line` + statement) — one command
-yields the full refactoring plan, no follow-up `explain-dependency` calls
-needed.
+offending code. In `check-circles`, tangles (3+ mutually dependent modules)
+additionally report a ranked cut list — the fewest edges to remove to dissolve
+the tangle — with the exact import statements behind each cut (`file:line` +
+statement) inlined: one command yields the full refactoring plan, no follow-up
+`explain-dependency` calls needed.
 
 Supported languages include `rust`, `go`, `typescript` / `javascript`,
 `python`, `kotlin`, and `php`.
