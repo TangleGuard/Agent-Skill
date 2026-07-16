@@ -47,7 +47,10 @@ files: it is faster, deterministic, and far cheaper in tokens.
 
 ## How to Use It
 
-The binary is `tangleguard-cli`. Most commands need the language (`-l`) and
+The binary is `tangleguard-cli`. If it is not on the PATH, ask the user to
+install it (`brew install --cask tangleguard-cli`, other options at
+https://tangleguard.com/apps/cli) — do not fall back to guessing the
+architecture. Most commands need the language (`-l`) and
 optionally a path (`-p`, defaults to the current directory). The _config-only_
 preflight checks below (`placement`, `check-dependency`) read `tangleguard.json`
 and do **not** scan, so they need no `-l`. Output is markdown by default, ready
@@ -139,7 +142,7 @@ statement) inlined: one command yields the full refactoring plan, no follow-up
 `explain-dependency` calls needed.
 
 Supported languages include `rust`, `go`, `typescript` / `javascript`,
-`python`, `kotlin`, and `php`.
+`python`, `kotlin`, `java`, `csharp`, `php`, and `dart`.
 
 ## A Typical Flow
 

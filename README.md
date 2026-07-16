@@ -13,3 +13,18 @@ brew install --cask tangleguard-cli
 ```
 
 See the [documentation](https://tangleguard.com/apps/cli) for alternative installation methods.
+
+## Installation
+
+### Claude Code (plugin)
+
+This repo is a Claude Code plugin and its own marketplace:
+
+```
+/plugin marketplace add TangleGuard/Agent-Skill
+/plugin install tangleguard@tangleguard
+```
+
+### Other agents
+
+The skill follows the [Agent Skills](https://agentskills.io) format — point your agent's skill loader at [`skills/tangleguard/SKILL.md`](skills/tangleguard/SKILL.md), or copy that directory into your project's skills folder (e.g. `.claude/skills/`, `.codex/skills/`).

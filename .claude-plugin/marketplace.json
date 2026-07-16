@@ -1,0 +1,12 @@
+{
+  "name": "tangleguard",
+  "description": "TangleGuard plugins: architecture analysis and import preflight for coding agents.",
+  "owner": { "name": "Archwise Solutions UG (haftungsbeschränkt)" },
+  "plugins": [
+    {
+      "name": "tangleguard",
+      "source": "./",
+      "description": "Architecture guardrail for coding agents, powered by the TangleGuard CLI."
+    }
+  ]
+}
