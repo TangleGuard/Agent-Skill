@@ -2,9 +2,18 @@
   "name": "tangleguard",
   "version": "1.0.0",
   "description": "Architecture guardrail for coding agents: inspect intended layers, packages and the dependency graph, and preflight every import against dependency rules and cycles via the TangleGuard CLI.",
-  "author": { "name": "Archwise Solutions UG (haftungsbeschränkt)", "email": "archwise-contact@mailbox.org" },
+  "author": {
+    "name": "Archwise Solutions UG (haftungsbeschränkt)",
+    "email": "archwise-contact@mailbox.org"
+  },
   "homepage": "https://tangleguard.com",
   "repository": "https://github.com/TangleGuard/Agent-Skill",
   "license": "MIT",
-  "keywords": ["architecture", "dependencies", "static-analysis", "circular-dependencies", "guardrail"]
+  "keywords": [
+    "architecture",
+    "dependencies",
+    "static-analysis",
+    "circular-dependencies",
+    "guardrail"
+  ]
 }
