@@ -81,8 +81,10 @@ walks through breaking it.
 
 ## A Typical Flow
 
-1. Deciding where new code belongs → ask `placement`.
-2. About to add or change an import → run `check-import` with the two files;
+1. About to change an existing block → run `context --node <file-or-name>`
+   (architecture skill) for its rules, actual edges, and blast radius.
+2. Deciding where new code belongs → ask `placement`.
+3. About to add or change an import → run `check-import` with the two files;
    on DENIED pick a different design instead of adding the edge.
-3. Make the change.
-4. Run `validate` and fix anything it reports at the given `file:line`.
+4. Make the change.
+5. Run `validate` and fix anything it reports at the given `file:line`.

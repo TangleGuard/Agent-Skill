@@ -2,8 +2,9 @@
 name: architecture
 description: >-
   Inspect a codebase's real architecture — layers, packages, lines of code,
-  the package dependency graph, and the evidence behind any dependency (the
-  exact imports, file:line) — by querying the TangleGuard CLI instead of
+  the package dependency graph, one block's full context (its layer, rules,
+  actual edges, and blast radius), and the evidence behind any dependency
+  (the exact imports, file:line) — by querying the TangleGuard CLI instead of
   reading files and guessing. Use when orienting in an unfamiliar codebase,
   when asked how the code is organized or what depends on what, and before
   any architectural or design discussion.
@@ -36,6 +37,22 @@ Prints a compact summary: the layers, the allowed dependency rules, the
 packages (with their resolved layer and lines of code), and the package-level
 dependency graph. Run this first — one call instead of reading dozens of
 files.
+
+## Get one block's full context (before touching it)
+
+```bash
+tangleguard-cli -q -l <language> [-p <path>] context --node <node>
+```
+
+The briefing to read before changing a specific block, in one call: its
+layer, the rules that apply to it (what it may depend on, what may depend on
+it — each with the permitting rule), its actual direct incoming/outgoing
+edges with reference counts, its **blast radius** (every block that
+transitively depends on it — what could break, what to re-test), and whether
+it sits in a cycle. `--node` accepts a `pkg::module` qualified name or a
+source-file path (the file you are about to edit). Prefer this over
+`architecture` when the task concerns one block rather than the whole
+codebase — it is smaller and more precise.
 
 ## Explain a dependency (evidence behind an arrow)
 

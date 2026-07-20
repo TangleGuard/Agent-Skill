@@ -27,4 +27,4 @@ This repo is a Claude Code plugin and its own marketplace:
 
 ### Other agents
 
-The skill follows the [Agent Skills](https://agentskills.io) format — point your agent's skill loader at [`skills/tangleguard/SKILL.md`](skills/tangleguard/SKILL.md), or copy that directory into your project's skills folder (e.g. `.claude/skills/`, `.codex/skills/`).
+The skills follow the [Agent Skills](https://agentskills.io) format — point your agent's skill loader at the [`skills/`](skills/) directory (`architecture`, `validate`, `untangle`), or copy it into your project's skills folder (e.g. `.claude/skills/`, `.codex/skills/`).
