@@ -66,6 +66,24 @@ tangleguard-cli -l <language> [-p <path>] would-create-cycle --from <node> --to 
 Add `--ci` to `check-import` / `check-dependency` / `would-create-cycle` to
 exit non-zero on a denial (useful as a commit/CI guardrail).
 
+## No rules configured yet?
+
+If checks report that no layers or rules exist, don't write `tangleguard.json`
+by hand — infer a starting point from the actual dependency graph:
+
+```bash
+tangleguard-cli -q -l <language> [-p <path>] suggest-layers [--format json]
+```
+
+Deterministic (no AI): entry points (packages nothing depends on) form the top
+layer, mutually-dependent packages share a layer (flagged for untangling), the
+rest is levelled by longest dependency path, and rules are emitted only for
+dependencies observed today — so the proposal validates clean the moment it is
+applied. Present the suggestion to the user
+for approval (they may rename layers), then apply it via `write-config` with
+the `--format json` output's `layers` and `rules`. Never apply it without the
+user's confirmation — rule changes are a human decision.
+
 ## Validate (after the change)
 
 ```bash
