@@ -18,7 +18,7 @@ structure, ask TangleGuard instead of reading source files: it is faster,
 cheaper in tokens, and grounded in facts rather than inference from file
 paths.
 
-The binary is `tangleguard-cli`. If it is not on the PATH, ask the user to
+The binary is `tangleguard`. If it is not on the PATH, ask the user to
 install it (`brew install --cask tangleguard-cli`, other options at
 https://tangleguard.com/apps/cli) — do not fall back to guessing the
 architecture. Commands need the language (`-l`) and optionally a path (`-p`,
@@ -30,7 +30,7 @@ languages include `rust`, `go`, `typescript` / `javascript`, `python`,
 ## Get the big picture
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] architecture
+tangleguard -q -l <language> [-p <path>] architecture
 ```
 
 Prints a compact summary: the layers, the allowed dependency rules, the
@@ -41,7 +41,7 @@ files.
 ## Get one block's full context (before touching it)
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] context --node <node>
+tangleguard -q -l <language> [-p <path>] context --node <node>
 ```
 
 The briefing to read before changing a specific block, in one call: its
@@ -57,7 +57,7 @@ codebase — it is smaller and more precise.
 ## Explain a dependency (evidence behind an arrow)
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] explain-dependency --from <source> --to <target>
+tangleguard -q -l <language> [-p <path>] explain-dependency --from <source> --to <target>
 ```
 
 The architecture summary shows _that_ a dependency exists; this shows _why_:

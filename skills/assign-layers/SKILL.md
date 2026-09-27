@@ -13,7 +13,7 @@ description: >-
 
 # Assign Layers: Map Components onto a Target Architecture
 
-Requires `tangleguard-cli` on the PATH (install: `brew install --cask
+Requires `tangleguard` on the PATH (install: `brew install --cask
 tangleguard-cli`, see https://tangleguard.com/apps/cli). Commands take
 `-l <language>` and optionally `-p <path>`.
 
@@ -36,7 +36,7 @@ decision for the user.
 ### 1. Establish the target layers
 
 ```bash
-tangleguard-cli [-p <path>] read-config
+tangleguard [-p <path>] read-config
 ```
 
 If the config already declares layers (e.g. the user applied a template in
@@ -58,7 +58,7 @@ names as the desktop app's templates) — or with layers the user describes.
 ### 2. List the components
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] architecture
+tangleguard -q -l <language> [-p <path>] architecture
 ```
 
 Packages with `layer: null` (JSON) or no layer (markdown) need assignment.
@@ -72,7 +72,7 @@ Names and paths first; that settles most components. When a name is opaque,
 gather evidence before guessing:
 
 ```bash
-tangleguard-cli -q -l <language> context --node <component>
+tangleguard -q -l <language> context --node <component>
 ```
 
 and read a few of its files. A component whose role is genuinely unclear
@@ -92,13 +92,13 @@ Merge the assignments into the config — take the exact JSON from
 and write it back:
 
 ```bash
-tangleguard-cli [-p <path>] write-config --config '<full merged JSON>'
+tangleguard [-p <path>] write-config --config '<full merged JSON>'
 ```
 
 ### 6. Produce the migration backlog
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] validate
+tangleguard -q -l <language> [-p <path>] validate
 ```
 
 Report the violations grouped by edge, framed as the gap between the code

@@ -12,7 +12,7 @@ description: >-
 
 # Untangle: Break a Cycle with Evidence, Not Guesswork
 
-Requires `tangleguard-cli` on the PATH (install: `brew install --cask
+Requires `tangleguard` on the PATH (install: `brew install --cask
 tangleguard-cli`, see https://tangleguard.com/apps/cli). All commands take
 `-l <language>` and optionally `-p <path>`.
 
@@ -21,7 +21,7 @@ tangleguard-cli`, see https://tangleguard.com/apps/cli). All commands take
 ### 1. Find the tangle
 
 ```bash
-tangleguard-cli -q -l <language> check-circles
+tangleguard -q -l <language> check-circles
 ```
 
 Simple cycles (2 modules) list the edges directly. Tangles (3+ mutually
@@ -53,7 +53,7 @@ Apply the cut. Before writing any **new** import the refactor introduces,
 preflight it so the fix doesn't create the next violation:
 
 ```bash
-tangleguard-cli -q -l <language> check-import --from <source> --to <target>
+tangleguard -q -l <language> check-import --from <source> --to <target>
 ```
 
 `DENIED` means pick a different target — typically one layer lower.
@@ -61,8 +61,8 @@ tangleguard-cli -q -l <language> check-import --from <source> --to <target>
 ### 4. Verify
 
 ```bash
-tangleguard-cli -q -l <language> check-circles   # the cycle is gone
-tangleguard-cli -q -l <language> validate        # and nothing new broke
+tangleguard -q -l <language> check-circles   # the cycle is gone
+tangleguard -q -l <language> validate        # and nothing new broke
 ```
 
 Both clean → done. Report what was cut, where the code moved, and why that

@@ -16,7 +16,7 @@ and dependency rules) and detects circular dependencies. Use it in both
 directions: **preflight** before writing a change so violations never enter
 the codebase, and **validate** after a change to confirm nothing broke.
 
-The binary is `tangleguard-cli`. If it is not on the PATH, ask the user to
+The binary is `tangleguard`. If it is not on the PATH, ask the user to
 install it (`brew install --cask tangleguard-cli`, other options at
 https://tangleguard.com/apps/cli). Commands need the language (`-l`) and
 optionally a path (`-p`, defaults to the current directory); the config-only
@@ -31,7 +31,7 @@ The default preflight is **`check-import`** — one combined verdict covering
 both the dependency rules and circular dependencies:
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] check-import --from <source> --to <target>
+tangleguard -q -l <language> [-p <path>] check-import --from <source> --to <target>
 ```
 
 The first line is `ALLOWED` or `DENIED`; a denial names the violated rule
@@ -45,13 +45,13 @@ workspace path like `apps::web` or a layer name like `Apps`:
 
 ```bash
 # Where does a node belong, and what may it wire to? (config-only, no -l)
-tangleguard-cli [-p <path>] placement --node <node>
+tangleguard [-p <path>] placement --node <node>
 
 # Is a dependency edge allowed by the rules? (config-only, no -l)
-tangleguard-cli [-p <path>] check-dependency --from <node> --to <node>
+tangleguard [-p <path>] check-dependency --from <node> --to <node>
 
 # Would adding a dependency create a circular dependency? (scans, needs -l)
-tangleguard-cli -l <language> [-p <path>] would-create-cycle --from <node> --to <node>
+tangleguard -l <language> [-p <path>] would-create-cycle --from <node> --to <node>
 ```
 
 - **`placement`** lists the node's layer plus every layer/path it may depend
@@ -72,7 +72,7 @@ If checks report that no layers or rules exist, don't write `tangleguard.json`
 by hand — infer a starting point from the actual dependency graph:
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] suggest-layers [--format json]
+tangleguard -q -l <language> [-p <path>] suggest-layers [--format json]
 ```
 
 Deterministic (no AI): entry points (packages nothing depends on) form the top
@@ -87,9 +87,9 @@ user's confirmation — rule changes are a human decision.
 ## Validate (after the change)
 
 ```bash
-tangleguard-cli -q -l <language> [-p <path>] validate         # rule violations + cycles
-tangleguard-cli -q -l <language> [-p <path>] validate-rules   # rule violations only
-tangleguard-cli -q -l <language> [-p <path>] check-circles    # circular dependencies only
+tangleguard -q -l <language> [-p <path>] validate         # rule violations + cycles
+tangleguard -q -l <language> [-p <path>] validate-rules   # rule violations only
+tangleguard -q -l <language> [-p <path>] check-circles    # circular dependencies only
 ```
 
 Violations come back with `file:line` evidence — open those locations and fix
